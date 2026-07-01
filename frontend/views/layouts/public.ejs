@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= typeof title !== 'undefined' ? title + ' | ' : '' %><%= profilDesa ? profilDesa.namaDesa : 'Desa Melikan' %></title>
+  <meta name="description" content="<%= profilDesa ? profilDesa.tagline : 'Website Resmi Desa' %>" />
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <!-- Google Fonts: Plus Jakarta Sans + Fraunces -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,700;9..144,900&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            serif: ['Fraunces', 'serif'],
+          },
+          colors: {
+            desa: {
+              primary: '#2563eb',   // biru utama
+              secondary: '#C2410C', // coklat gerabah
+              accent: '#F59E0B',    // emas
+              cream: '#FBF7F0',
+              dark: '#1A2E1F',
+            },
+          },
+        },
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body class="font-sans bg-desa-cream text-desa-dark antialiased">
+  <%- include('../partials/navbar') %>
+
+  <!-- Flash Messages -->
+  <% if (success_msg && success_msg.length) { %>
+    <div class="fixed top-20 right-4 z-50 bg-blue-600 text-white px-6 py-3 rounded-lg shadow-2xl animate-pulse" data-testid="flash-success">
+      <i class="fas fa-check-circle mr-2"></i><%= success_msg %>
+    </div>
+  <% } %>
+  <% if (error_msg && error_msg.length) { %>
+    <div class="fixed top-20 right-4 z-50 bg-red-600 text-white px-6 py-3 rounded-lg shadow-2xl" data-testid="flash-error">
+      <i class="fas fa-exclamation-circle mr-2"></i><%= error_msg %>
+    </div>
+  <% } %>
+
+  <main class="min-h-screen">
+    <%- body %>
+  </main>
+
+  <%- include('../partials/footer') %>
+
+  <script src="/static/js/main.js"></script>
+</body>
+</html>

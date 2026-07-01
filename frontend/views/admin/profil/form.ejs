@@ -1,0 +1,134 @@
+<!-- PROFIL DESA FORM -->
+<form action="/admin/profil" method="POST" enctype="multipart/form-data" class="space-y-6">
+  <!-- Info Dasar -->
+  <div class="bg-white rounded-2xl p-6 border border-slate-200">
+    <h3 class="font-bold text-base text-slate-800 mb-4 pb-3 border-b border-slate-200"><i class="fas fa-info-circle text-desa-primary mr-2"></i>Informasi Dasar</h3>
+    <div class="grid sm:grid-cols-2 gap-4">
+      <div>
+        <label class="block text-sm font-bold text-slate-700 mb-1.5">Nama Desa</label>
+        <input type="text" name="namaDesa" value="<%= profil.namaDesa %>" class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:border-desa-primary focus:ring-4 focus:ring-desa-primary/20 outline-none" />
+      </div>
+      <div>
+        <label class="block text-sm font-bold text-slate-700 mb-1.5">Tagline</label>
+        <input type="text" name="tagline" value="<%= profil.tagline %>" class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:border-desa-primary focus:ring-4 focus:ring-desa-primary/20 outline-none" />
+      </div>
+      <div>
+        <label class="block text-sm font-bold text-slate-700 mb-1.5">Kecamatan</label>
+        <input type="text" name="kecamatan" value="<%= profil.kecamatan %>" class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:border-desa-primary focus:ring-4 focus:ring-desa-primary/20 outline-none" />
+      </div>
+      <div>
+        <label class="block text-sm font-bold text-slate-700 mb-1.5">Kabupaten</label>
+        <input type="text" name="kabupaten" value="<%= profil.kabupaten %>" class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:border-desa-primary focus:ring-4 focus:ring-desa-primary/20 outline-none" />
+      </div>
+      <div>
+        <label class="block text-sm font-bold text-slate-700 mb-1.5">Provinsi</label>
+        <input type="text" name="provinsi" value="<%= profil.provinsi %>" class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:border-desa-primary focus:ring-4 focus:ring-desa-primary/20 outline-none" />
+      </div>
+      <div>
+        <label class="block text-sm font-bold text-slate-700 mb-1.5">Kode Pos</label>
+        <input type="text" name="kodePos" value="<%= profil.kodePos %>" class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:border-desa-primary focus:ring-4 focus:ring-desa-primary/20 outline-none" />
+      </div>
+    </div>
+  </div>
+
+  <!-- Sejarah & Visi Misi -->
+  <div class="bg-white rounded-2xl p-6 border border-slate-200">
+    <h3 class="font-bold text-base text-slate-800 mb-4 pb-3 border-b border-slate-200"><i class="fas fa-book text-desa-primary mr-2"></i>Sejarah, Visi & Misi</h3>
+    <div class="space-y-4">
+      <div>
+        <label class="block text-sm font-bold text-slate-700 mb-1.5">Sejarah Desa</label>
+        <textarea name="sejarah" rows="6" class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:border-desa-primary focus:ring-4 focus:ring-desa-primary/20 outline-none resize-none"><%= profil.sejarah %></textarea>
+      </div>
+      <div>
+        <label class="block text-sm font-bold text-slate-700 mb-1.5">Visi</label>
+        <textarea name="visi" rows="2" class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:border-desa-primary focus:ring-4 focus:ring-desa-primary/20 outline-none resize-none"><%= profil.visi %></textarea>
+      </div>
+      <div>
+        <label class="block text-sm font-bold text-slate-700 mb-1.5">Misi (satu poin per baris)</label>
+        <textarea name="misi" rows="6" placeholder="Mewujudkan ...&#10;Mengembangkan ..." class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:border-desa-primary focus:ring-4 focus:ring-desa-primary/20 outline-none resize-none"><%= (profil.misi || []).join('\n') %></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- Struktur Organisasi -->
+  <div class="bg-white rounded-2xl p-6 border border-slate-200">
+    <h3 class="font-bold text-base text-slate-800 mb-4 pb-3 border-b border-slate-200"><i class="fas fa-sitemap text-desa-primary mr-2"></i>Struktur Organisasi</h3>
+    <p class="text-xs text-slate-500 mb-4">Isi minimal Kepala Desa, Sekretaris, dan jabatan lainnya.</p>
+    <div id="strukturList" class="space-y-3">
+      <% (profil.struktur || []).forEach(s => { %>
+        <div class="flex gap-2">
+          <input type="text" name="struktur_jabatan" value="<%= s.jabatan %>" placeholder="Jabatan" class="flex-1 px-3 py-2 rounded-lg border border-slate-300" />
+          <input type="text" name="struktur_nama" value="<%= s.nama %>" placeholder="Nama" class="flex-1 px-3 py-2 rounded-lg border border-slate-300" />
+          <button type="button" onclick="this.parentElement.remove()" class="px-3 py-2 rounded-lg bg-red-100 text-red-600 hover:bg-red-200"><i class="fas fa-trash"></i></button>
+        </div>
+      <% }) %>
+    </div>
+    <button type="button" onclick="addStruktur()" class="mt-3 text-sm text-desa-primary font-bold hover:underline"><i class="fas fa-plus mr-1"></i>Tambah Jabatan</button>
+  </div>
+
+  <!-- Statistik -->
+  <div class="bg-white rounded-2xl p-6 border border-slate-200">
+    <h3 class="font-bold text-base text-slate-800 mb-4 pb-3 border-b border-slate-200"><i class="fas fa-chart-pie text-desa-primary mr-2"></i>Statistik (ditampilkan di Beranda)</h3>
+    <div id="statistikList" class="space-y-3">
+      <% (profil.statistik || []).forEach(s => { %>
+        <div class="flex gap-2">
+          <input type="text" name="statistik_label" value="<%= s.label %>" placeholder="Label" class="flex-1 px-3 py-2 rounded-lg border border-slate-300" />
+          <input type="text" name="statistik_nilai" value="<%= s.nilai %>" placeholder="Nilai" class="flex-1 px-3 py-2 rounded-lg border border-slate-300" />
+          <input type="text" name="statistik_icon" value="<%= s.icon %>" placeholder="icon (mis: users)" class="w-32 px-3 py-2 rounded-lg border border-slate-300" />
+          <button type="button" onclick="this.parentElement.remove()" class="px-3 py-2 rounded-lg bg-red-100 text-red-600 hover:bg-red-200"><i class="fas fa-trash"></i></button>
+        </div>
+      <% }) %>
+    </div>
+    <button type="button" onclick="addStatistik()" class="mt-3 text-sm text-desa-primary font-bold hover:underline"><i class="fas fa-plus mr-1"></i>Tambah Statistik</button>
+    <p class="text-xs text-slate-500 mt-2">Icon: Font Awesome solid icon name (mis. <code>users</code>, <code>house-user</code>, <code>map</code>).</p>
+  </div>
+
+  <!-- Info Wilayah -->
+  <div class="bg-white rounded-2xl p-6 border border-slate-200">
+    <h3 class="font-bold text-base text-slate-800 mb-4 pb-3 border-b border-slate-200"><i class="fas fa-map text-desa-primary mr-2"></i>Info Wilayah</h3>
+    <div class="grid sm:grid-cols-3 gap-4">
+      <div>
+        <label class="block text-sm font-bold text-slate-700 mb-1.5">Luas Wilayah</label>
+        <input type="text" name="luasWilayah" value="<%= profil.luasWilayah %>" class="w-full px-4 py-2.5 rounded-lg border border-slate-300" />
+      </div>
+      <div>
+        <label class="block text-sm font-bold text-slate-700 mb-1.5">Jumlah Penduduk</label>
+        <input type="text" name="jumlahPenduduk" value="<%= profil.jumlahPenduduk %>" class="w-full px-4 py-2.5 rounded-lg border border-slate-300" />
+      </div>
+      <div>
+        <label class="block text-sm font-bold text-slate-700 mb-1.5">Jumlah KK</label>
+        <input type="text" name="jumlahKK" value="<%= profil.jumlahKK %>" class="w-full px-4 py-2.5 rounded-lg border border-slate-300" />
+      </div>
+    </div>
+  </div>
+
+  <div class="flex gap-3">
+    <button type="submit" class="bg-desa-primary text-white px-8 py-3 rounded-lg font-bold hover:bg-desa-dark transition shadow-lg">
+      <i class="fas fa-save mr-2"></i>Simpan Profil Desa
+    </button>
+  </div>
+</form>
+
+<script>
+  function addStruktur() {
+    const div = document.createElement('div');
+    div.className = 'flex gap-2';
+    div.innerHTML = `
+      <input type="text" name="struktur_jabatan" placeholder="Jabatan" class="flex-1 px-3 py-2 rounded-lg border border-slate-300" />
+      <input type="text" name="struktur_nama" placeholder="Nama" class="flex-1 px-3 py-2 rounded-lg border border-slate-300" />
+      <button type="button" onclick="this.parentElement.remove()" class="px-3 py-2 rounded-lg bg-red-100 text-red-600 hover:bg-red-200"><i class="fas fa-trash"></i></button>
+    `;
+    document.getElementById('strukturList').appendChild(div);
+  }
+  function addStatistik() {
+    const div = document.createElement('div');
+    div.className = 'flex gap-2';
+    div.innerHTML = `
+      <input type="text" name="statistik_label" placeholder="Label" class="flex-1 px-3 py-2 rounded-lg border border-slate-300" />
+      <input type="text" name="statistik_nilai" placeholder="Nilai" class="flex-1 px-3 py-2 rounded-lg border border-slate-300" />
+      <input type="text" name="statistik_icon" value="users" placeholder="icon" class="w-32 px-3 py-2 rounded-lg border border-slate-300" />
+      <button type="button" onclick="this.parentElement.remove()" class="px-3 py-2 rounded-lg bg-red-100 text-red-600 hover:bg-red-200"><i class="fas fa-trash"></i></button>
+    `;
+    document.getElementById('statistikList').appendChild(div);
+  }
+</script>

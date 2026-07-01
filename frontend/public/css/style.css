@@ -1,0 +1,26 @@
+/* Custom styles tambahan - bekerja bersama Tailwind */
+html { scroll-behavior: smooth; }
+
+/* Line clamp helper (untuk browser jadul) */
+.line-clamp-1, .line-clamp-2, .line-clamp-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+.line-clamp-1 { -webkit-line-clamp: 1; }
+.line-clamp-2 { -webkit-line-clamp: 2; }
+.line-clamp-3 { -webkit-line-clamp: 3; }
+
+/* Smooth animations on scroll-reveal */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+main > section { animation: fadeUp 0.6s ease-out; }
+
+/* Selection */
+::selection {
+  background-color: #2563eb ;
+  color: #FBF7F0;
+}

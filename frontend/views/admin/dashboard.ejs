@@ -1,0 +1,82 @@
+<!-- ADMIN DASHBOARD -->
+<div class="space-y-6" data-testid="admin-dashboard">
+  <!-- Welcome -->
+  <div class="bg-gradient-to-br from-desa-primary to-desa-dark text-white rounded-2xl p-6 lg:p-8">
+    <h2 class="font-serif text-3xl font-black mb-1">Selamat datang, <%= admin.name %>!</h2>
+    <p class="text-white/80">Kelola seluruh konten website Desa Melikan dari satu tempat.</p>
+  </div>
+
+  <!-- Stats Grid -->
+  <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
+    <% const cards = [
+      { label: 'Total Berita', value: stats.totalBerita, icon: 'newspaper', color: 'bg-blue-500', href: '/admin/berita' },
+      { label: 'Total Potensi', value: stats.totalPotensi, icon: 'seedling', color: 'bg-blue-500', href: '/admin/potensi' },
+      { label: 'Foto Galeri', value: stats.totalGaleri, icon: 'images', color: 'bg-purple-500', href: '/admin/galeri' },
+      { label: 'Video Profil', value: stats.totalVideo, icon: 'video', color: 'bg-pink-500', href: '/admin/video' },
+      { label: 'Total Pesan', value: stats.totalPesan, icon: 'envelope', color: 'bg-orange-500', href: '/admin/pesan' },
+      { label: 'Pesan Belum Dibaca', value: stats.pesanBaru, icon: 'envelope-open', color: 'bg-red-500', href: '/admin/pesan' },
+    ]; %>
+    <% cards.forEach(c => { %>
+      <a href="<%= c.href %>" class="bg-white rounded-2xl p-5 border border-slate-200 hover:shadow-lg hover:-translate-y-0.5 transition" data-testid="stat-<%= c.icon %>">
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="text-xs uppercase tracking-wider text-slate-500"><%= c.label %></div>
+            <div class="text-3xl font-black text-slate-800 mt-1"><%= c.value %></div>
+          </div>
+          <div class="w-12 h-12 rounded-xl <%= c.color %> text-white flex items-center justify-center">
+            <i class="fas fa-<%= c.icon %> text-xl"></i>
+          </div>
+        </div>
+      </a>
+    <% }) %>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="bg-white rounded-2xl p-6 border border-slate-200">
+    <h3 class="font-bold text-lg text-slate-800 mb-4">Aksi Cepat</h3>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <a href="/admin/berita/tambah" class="flex flex-col items-center gap-2 p-4 rounded-xl bg-blue-50 hover:bg-blue-100 transition" data-testid="quick-tambah-berita">
+        <i class="fas fa-plus-circle text-2xl text-blue-600"></i>
+        <span class="text-sm font-semibold text-blue-800">Tambah Berita</span>
+      </a>
+      <a href="/admin/potensi/tambah" class="flex flex-col items-center gap-2 p-4 rounded-xl bg-blue-50 hover:bg-blue-100 transition" data-testid="quick-tambah-potensi">
+        <i class="fas fa-plus-circle text-2xl text-blue-600"></i>
+        <span class="text-sm font-semibold text-blue-800">Tambah Potensi</span>
+      </a>
+      <a href="/admin/galeri/tambah" class="flex flex-col items-center gap-2 p-4 rounded-xl bg-purple-50 hover:bg-purple-100 transition" data-testid="quick-tambah-galeri">
+        <i class="fas fa-plus-circle text-2xl text-purple-600"></i>
+        <span class="text-sm font-semibold text-purple-800">Upload Foto</span>
+      </a>
+      <a href="/admin/video/tambah" class="flex flex-col items-center gap-2 p-4 rounded-xl bg-pink-50 hover:bg-pink-100 transition" data-testid="quick-tambah-video">
+        <i class="fas fa-plus-circle text-2xl text-pink-600"></i>
+        <span class="text-sm font-semibold text-pink-800">Tambah Video</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Berita Terbaru -->
+  <div class="bg-white rounded-2xl p-6 border border-slate-200">
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="font-bold text-lg text-slate-800">Berita Terbaru</h3>
+      <a href="/admin/berita" class="text-sm text-desa-primary font-semibold hover:underline">Lihat Semua</a>
+    </div>
+    <% if (beritaTerbaru.length === 0) { %>
+      <p class="text-sm text-slate-500 py-6 text-center">Belum ada berita.</p>
+    <% } else { %>
+      <div class="divide-y divide-slate-100">
+        <% beritaTerbaru.forEach(b => { %>
+          <a href="/admin/berita/edit/<%= b._id %>" class="flex items-center gap-4 py-3 hover:bg-slate-50 px-2 rounded-lg transition">
+            <div class="w-12 h-12 rounded-lg bg-slate-100 flex items-center justify-center flex-shrink-0">
+              <i class="fas fa-newspaper text-slate-400"></i>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="font-semibold text-slate-800 truncate"><%= b.judul %></div>
+              <div class="text-xs text-slate-500"><%= b.kategori %> • <%= new Date(b.createdAt).toLocaleDateString('id-ID') %></div>
+            </div>
+            <i class="fas fa-chevron-right text-slate-400"></i>
+          </a>
+        <% }) %>
+      </div>
+    <% } %>
+  </div>
+</div>

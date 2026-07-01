@@ -1,0 +1,51 @@
+<!-- PESAN DETAIL -->
+<div class="bg-white rounded-2xl p-6 lg:p-8 border border-slate-200">
+  <div class="flex items-center justify-between mb-6">
+    <h2 class="font-bold text-lg text-slate-800">Detail Pesan</h2>
+    <a href="/admin/pesan" class="text-sm text-slate-600 hover:text-desa-primary"><i class="fas fa-arrow-left mr-1"></i> Kembali</a>
+  </div>
+
+  <div class="space-y-4">
+    <div class="grid sm:grid-cols-2 gap-4 pb-4 border-b border-slate-200">
+      <div>
+        <div class="text-xs uppercase tracking-wider text-slate-500">Pengirim</div>
+        <div class="font-bold text-slate-800"><%= item.nama %></div>
+      </div>
+      <div>
+        <div class="text-xs uppercase tracking-wider text-slate-500">Email</div>
+        <div class="font-bold text-slate-800"><a href="mailto:<%= item.email %>" class="text-desa-primary hover:underline"><%= item.email %></a></div>
+      </div>
+      <% if (item.telepon) { %>
+      <div>
+        <div class="text-xs uppercase tracking-wider text-slate-500">Telepon</div>
+        <div class="font-bold text-slate-800"><%= item.telepon %></div>
+      </div>
+      <% } %>
+      <div>
+        <div class="text-xs uppercase tracking-wider text-slate-500">Tanggal</div>
+        <div class="font-bold text-slate-800"><%= new Date(item.createdAt).toLocaleString('id-ID') %></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="text-xs uppercase tracking-wider text-slate-500 mb-1">Subjek</div>
+      <div class="font-bold text-xl text-slate-800"><%= item.subjek %></div>
+    </div>
+
+    <div>
+      <div class="text-xs uppercase tracking-wider text-slate-500 mb-2">Isi Pesan</div>
+      <div class="bg-slate-50 p-4 rounded-lg whitespace-pre-line text-slate-700 leading-relaxed"><%= item.pesan %></div>
+    </div>
+
+    <div class="flex gap-3 pt-4 border-t border-slate-200">
+      <a href="mailto:<%= item.email %>?subject=Re: <%= encodeURIComponent(item.subjek) %>" class="bg-desa-primary text-white px-6 py-3 rounded-lg font-bold hover:bg-desa-dark transition">
+        <i class="fas fa-reply mr-2"></i>Balas via Email
+      </a>
+      <form action="/admin/pesan/hapus/<%= item._id %>" method="POST" onsubmit="return confirm('Yakin hapus pesan?')">
+        <button type="submit" class="px-6 py-3 rounded-lg bg-red-100 text-red-600 font-bold hover:bg-red-200 transition">
+          <i class="fas fa-trash mr-2"></i>Hapus
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

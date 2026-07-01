@@ -1,0 +1,52 @@
+<!-- POTENSI LIST -->
+<div class="bg-white rounded-2xl p-6 border border-slate-200">
+  <div class="flex items-center justify-between mb-6">
+    <h2 class="font-bold text-lg text-slate-800">Daftar Potensi (<%= potensi.length %>)</h2>
+    <a href="/admin/potensi/tambah" class="bg-desa-primary text-white px-4 py-2 rounded-lg font-semibold hover:bg-desa-dark transition" data-testid="btn-tambah-potensi">
+      <i class="fas fa-plus mr-1"></i> Tambah Potensi
+    </a>
+  </div>
+
+  <% if (potensi.length === 0) { %>
+    <div class="text-center py-12 text-slate-500"><i class="fas fa-seedling text-5xl mb-4"></i><p>Belum ada potensi.</p></div>
+  <% } else { %>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead class="text-xs uppercase tracking-wider text-slate-500 border-b border-slate-200">
+          <tr>
+            <th class="text-left py-3 px-3">Nama</th>
+            <th class="text-left py-3 px-3">Kategori</th>
+            <th class="text-left py-3 px-3">Lokasi</th>
+            <th class="text-left py-3 px-3">Featured</th>
+            <th class="text-right py-3 px-3">Aksi</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100">
+          <% potensi.forEach(p => { %>
+            <tr class="hover:bg-slate-50">
+              <td class="py-3 px-3">
+                <div class="flex items-center gap-3">
+                  <% if (p.gambar) { %>
+                    <img src="<%= p.gambar %>" class="w-12 h-12 rounded-lg object-cover" />
+                  <% } else { %>
+                    <div class="w-12 h-12 rounded-lg bg-slate-100 flex items-center justify-center"><i class="fas fa-image text-slate-300"></i></div>
+                  <% } %>
+                  <div class="font-semibold text-slate-800"><%= p.nama %></div>
+                </div>
+              </td>
+              <td class="py-3 px-3"><span class="bg-blue-50 text-blue-700 text-xs font-semibold px-2 py-1 rounded"><%= p.kategori %></span></td>
+              <td class="py-3 px-3 text-slate-600 text-xs"><%= p.lokasi || '-' %></td>
+              <td class="py-3 px-3"><%= p.featured ? '<span class="text-desa-accent"><i class="fas fa-star"></i></span>' : '-' %></td>
+              <td class="py-3 px-3 text-right">
+                <a href="/admin/potensi/edit/<%= p._id %>" class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-blue-100 text-blue-600 hover:bg-blue-200"><i class="fas fa-pen"></i></a>
+                <form action="/admin/potensi/hapus/<%= p._id %>" method="POST" class="inline" onsubmit="return confirm('Yakin hapus?')">
+                  <button type="submit" class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-red-100 text-red-600 hover:bg-red-200"><i class="fas fa-trash"></i></button>
+                </form>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  <% } %>
+</div>

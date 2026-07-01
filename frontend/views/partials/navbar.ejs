@@ -1,0 +1,61 @@
+<!-- Navbar Publik -->
+<nav class="bg-white/95 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40 shadow-sm">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <!-- Logo / Nama -->
+      <a href="/" class="flex items-center gap-3 group" data-testid="navbar-logo-link">
+        <% const logoUrl = profilDesa && profilDesa.logo ? profilDesa.logo : '/static/images/LOGO PADUKUHAN MELIKAN FIX.png'; %>
+        <img src="<%= logoUrl %>" alt="<%= profilDesa ? profilDesa.namaDesa : 'Desa Melikan' %> logo" class="w-10 h-10 rounded-xl object-cover shadow-md group-hover:scale-110 transition-transform" />
+        <div class="leading-tight">
+          <div class="font-serif font-black text-lg text-desa-dark"><%= profilDesa ? profilDesa.namaDesa : 'Desa Melikan' %></div>
+          <div class="text-[10px] uppercase tracking-widest text-desa-primary font-semibold">Kabupaten <%= profilDesa && profilDesa.kabupaten ? profilDesa.kabupaten : 'Klaten' %></div>
+        </div>
+      </a>
+
+      <!-- Menu desktop -->
+      <div class="hidden lg:flex items-center gap-1">
+        <% const links = [
+          { href: '/', label: 'Beranda' },
+          { href: '/profil', label: 'Profil' },
+          { href: '/potensi', label: 'Potensi' },
+          { href: '/berita', label: 'Berita' },
+          { href: '/galeri', label: 'Galeri' },
+          { href: '/kontak', label: 'Kontak' },
+        ]; %>
+        <% links.forEach(l => { 
+             const active = currentPath === l.href || (l.href !== '/' && currentPath.startsWith(l.href));
+        %>
+          <a href="<%= l.href %>" data-testid="nav-link-<%= l.label.toLowerCase() %>" class="px-4 py-2 rounded-lg text-sm font-semibold transition-colors <%= active ? 'bg-desa-primary text-white' : 'text-slate-700 hover:bg-desa-primary/10 hover:text-desa-primary' %>">
+            <%= l.label %>
+          </a>
+        <% }) %>
+        <a href="/auth/login" class="ml-2 px-4 py-2 rounded-lg text-sm font-semibold bg-desa-accent text-desa-dark hover:bg-yellow-500 transition" data-testid="navbar-admin-login">
+          <i class="fas fa-user-shield mr-1"></i> Admin
+        </a>
+      </div>
+
+      <!-- Mobile toggle -->
+      <button id="mobileMenuToggle" class="lg:hidden text-desa-dark text-2xl" data-testid="mobile-menu-toggle">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobileMenu" class="lg:hidden hidden pb-4 border-t border-slate-200">
+      <div class="flex flex-col gap-1 pt-3">
+        <% links.forEach(l => { %>
+          <a href="<%= l.href %>" class="px-4 py-3 rounded-lg text-sm font-semibold hover:bg-desa-primary/10 hover:text-desa-primary"><%= l.label %></a>
+        <% }) %>
+        <a href="/auth/login" class="px-4 py-3 rounded-lg text-sm font-semibold bg-desa-accent text-desa-dark">
+          <i class="fas fa-user-shield mr-1"></i> Login Admin
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<script>
+  document.getElementById('mobileMenuToggle')?.addEventListener('click', () => {
+    document.getElementById('mobileMenu').classList.toggle('hidden');
+  });
+</script>

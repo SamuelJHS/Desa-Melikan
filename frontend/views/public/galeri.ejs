@@ -1,0 +1,90 @@
+<!-- GALERI & VIDEO -->
+<section class="bg-gradient-to-br from-desa-dark to-desa-primary text-white py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-xs font-bold tracking-widest uppercase text-desa-accent mb-2">Dokumentasi</div>
+    <h1 class="font-serif text-5xl font-black" data-testid="page-title-galeri">Galeri & Video</h1>
+    <p class="text-white/70 mt-2">Momen-momen berharga Desa Melikan</p>
+  </div>
+</section>
+
+<!-- Video Section -->
+<% if (video && video.length) { %>
+<section class="py-16 bg-desa-cream">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-xs font-bold tracking-widest uppercase text-desa-secondary mb-2">Video Profil</div>
+    <h2 class="font-serif text-3xl font-black text-desa-dark mb-8">Tonton Video Desa</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <% video.forEach(v => { %>
+        <div class="bg-white rounded-3xl overflow-hidden shadow-lg border border-slate-200" data-testid="video-card">
+          <div class="aspect-video bg-black">
+            <% if (v.tipe === 'youtube' && v.youtubeId) { %>
+              <iframe src="https://www.youtube.com/embed/<%= v.youtubeId %>" allowfullscreen class="w-full h-full"></iframe>
+            <% } else if (v.filePath) { %>
+              <video controls class="w-full h-full">
+                <source src="<%= v.filePath %>" type="video/mp4" />
+              </video>
+            <% } %>
+          </div>
+          <div class="p-6">
+            <h3 class="font-serif font-bold text-xl text-desa-dark mb-2"><%= v.judul %></h3>
+            <% if (v.deskripsi) { %><p class="text-sm text-slate-600"><%= v.deskripsi %></p><% } %>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+<% } %>
+
+<!-- Galeri Foto -->
+<section class="py-16 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-xs font-bold tracking-widest uppercase text-desa-secondary mb-2">Foto</div>
+    <h2 class="font-serif text-3xl font-black text-desa-dark mb-8">Galeri Foto Desa</h2>
+
+    <% if (galeri.length === 0) { %>
+      <div class="text-center py-16 text-slate-500">
+        <i class="fas fa-images text-5xl mb-4"></i>
+        <p>Belum ada foto di galeri.</p>
+      </div>
+    <% } else { %>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <% galeri.forEach(g => { %>
+          <div class="aspect-square rounded-2xl overflow-hidden group relative cursor-pointer" onclick="openLightbox('<%= g.gambar %>', `<%= g.judul.replace(/`/g, '') %>`)" data-testid="galeri-item">
+            <img src="<%= g.gambar %>" alt="<%= g.judul %>" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition flex items-end p-4">
+              <div class="text-white">
+                <div class="font-bold text-sm line-clamp-2"><%= g.judul %></div>
+                <% if (g.kategori) { %><div class="text-xs text-desa-accent mt-1"><%= g.kategori %></div><% } %>
+              </div>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    <% } %>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div id="lightbox" class="hidden fixed inset-0 bg-black/90 z-50 items-center justify-center p-4" onclick="closeLightbox()">
+  <div class="max-w-5xl w-full" onclick="event.stopPropagation()">
+    <button onclick="closeLightbox()" class="absolute top-4 right-4 text-white text-3xl"><i class="fas fa-times"></i></button>
+    <img id="lightboxImg" src="" alt="" class="w-full h-auto max-h-[80vh] object-contain rounded-2xl" />
+    <div id="lightboxCaption" class="text-white text-center mt-4 font-bold"></div>
+  </div>
+</div>
+
+<script>
+  function openLightbox(src, title) {
+    const lb = document.getElementById('lightbox');
+    document.getElementById('lightboxImg').src = src;
+    document.getElementById('lightboxCaption').textContent = title;
+    lb.classList.remove('hidden');
+    lb.classList.add('flex');
+  }
+  function closeLightbox() {
+    const lb = document.getElementById('lightbox');
+    lb.classList.add('hidden');
+    lb.classList.remove('flex');
+  }
+</script>

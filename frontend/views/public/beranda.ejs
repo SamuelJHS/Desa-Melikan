@@ -1,0 +1,208 @@
+<!-- BERANDA -->
+
+<!-- Hero Section -->
+<!-- Hero Section dengan nuansa biru yang lebih muda -->
+<section class="relative overflow-hidden" style="background: linear-gradient(135deg, #2563eb 0%, #1e293b 70%, #C2410C 100%);">
+  <!-- Decorative grain -->
+  <div class="absolute inset-0 opacity-20" style="background-image: url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22><filter id=%22n%22><feTurbulence baseFrequency=%220.9%22/></filter><rect width=%22100%22 height=%22100%22 filter=%22url(%23n)%22 opacity=%220.3%22/></svg>');"></div>
+
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <div class="text-white">
+        <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 mb-6">
+          <span class="w-2 h-2 bg-desa-accent rounded-full animate-pulse"></span>
+          <span class="text-xs font-semibold tracking-widest uppercase">Selamat Datang di</span>
+        </div>
+        <h1 class="font-serif font-black text-5xl lg:text-7xl leading-tight mb-6" data-testid="hero-title">
+          <%= profilDesa ? profilDesa.namaDesa : 'Desa Melikan' %>
+        </h1>
+        <p class="text-xl lg:text-2xl text-white/90 mb-8 font-light italic">
+          "<%= profilDesa ? profilDesa.tagline : 'Maju Bersama, Sejahtera Bersama' %>"
+        </p>
+        <p class="text-base text-white/70 mb-10 max-w-xl leading-relaxed">
+          Pemerintah Desa berkomitmen melayani masyarakat dengan transparansi, melestarikan budaya gerabah, dan mengembangkan potensi lokal untuk kesejahteraan bersama.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href="/profil" data-testid="hero-cta-profil" class="inline-flex items-center gap-2 bg-desa-accent text-desa-dark px-6 py-3.5 rounded-full font-bold hover:bg-yellow-400 transition shadow-lg hover:shadow-xl">
+            <i class="fas fa-building-columns"></i> Profil Desa
+          </a>
+          <a href="/potensi" data-testid="hero-cta-potensi" class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/30 text-white px-6 py-3.5 rounded-full font-bold hover:bg-white/20 transition">
+            <i class="fas fa-seedling"></i> Jelajahi Potensi
+          </a>
+        </div>
+      </div>
+
+      <div class="hidden lg:block">
+        <div class="relative">
+          <div class="aspect-square rounded-3xl overflow-hidden shadow-2xl border-8 border-white/10 backdrop-blur-sm">
+            <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=800" alt="Desa" class="w-full h-full object-cover" />
+          </div>
+          <div class="absolute -bottom-6 -left-6 bg-white rounded-2xl p-5 shadow-2xl">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-xl bg-desa-secondary/10 flex items-center justify-center text-desa-secondary">
+                <i class="fas fa-award text-xl"></i>
+              </div>
+              <div>
+                <div class="text-xs text-slate-500 uppercase tracking-wider">Sentra</div>
+                <div class="font-bold text-desa-dark">Gerabah Tertua</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Statistik Desa -->
+<% if (profilDesa && profilDesa.statistik && profilDesa.statistik.length) { %>
+<section class="py-16 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <div class="inline-block text-xs font-bold tracking-widest uppercase text-desa-secondary mb-2">Statistik Desa</div>
+      <h2 class="font-serif text-4xl font-black text-desa-dark">Desa Dalam Angka</h2>
+    </div>
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+      <% profilDesa.statistik.forEach(s => { %>
+        <div class="bg-gradient-to-br from-desa-cream to-white border border-slate-200 rounded-2xl p-6 text-center hover:shadow-xl hover:-translate-y-1 transition" data-testid="stat-card">
+          <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-desa-primary/10 text-desa-primary flex items-center justify-center text-2xl">
+            <i class="fas fa-<%= s.icon %>"></i>
+          </div>
+          <div class="text-3xl font-black text-desa-dark mb-1"><%= s.nilai %></div>
+          <div class="text-sm text-slate-500 uppercase tracking-wider"><%= s.label %></div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+<% } %>
+
+<!-- Potensi Featured -->
+<% if (potensiFeatured && potensiFeatured.length) { %>
+<section class="py-20 bg-desa-cream">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-wrap items-end justify-between mb-12 gap-4">
+      <div>
+        <div class="text-xs font-bold tracking-widest uppercase text-desa-secondary mb-2">Yang Membanggakan</div>
+        <h2 class="font-serif text-4xl font-black text-desa-dark">Potensi Unggulan Desa</h2>
+      </div>
+      <a href="/potensi" class="text-desa-primary font-bold hover:underline">Lihat Semua <i class="fas fa-arrow-right ml-1"></i></a>
+    </div>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <% potensiFeatured.forEach(p => { %>
+        <a href="/potensi/<%= p._id %>" class="group bg-white rounded-2xl overflow-hidden border border-slate-200 hover:shadow-2xl hover:-translate-y-1 transition" data-testid="potensi-card">
+          <div class="aspect-[4/3] bg-slate-100 overflow-hidden relative">
+            <% if (p.gambar) { %>
+              <img src="<%= p.gambar %>" alt="<%= p.nama %>" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
+            <% } else { %>
+              <div class="w-full h-full flex items-center justify-center text-slate-300"><i class="fas fa-image text-6xl"></i></div>
+            <% } %>
+            <div class="absolute top-3 left-3 bg-desa-primary text-white text-xs font-bold px-3 py-1 rounded-full"><%= p.kategori %></div>
+          </div>
+          <div class="p-6">
+            <h3 class="font-serif font-bold text-xl text-desa-dark mb-2 group-hover:text-desa-primary transition"><%= p.nama %></h3>
+            <p class="text-sm text-slate-600 line-clamp-2"><%= p.deskripsi %></p>
+          </div>
+        </a>
+      <% }) %>
+    </div>
+  </div>
+</section>
+<% } %>
+
+<!-- Berita Terbaru -->
+<% if (beritaTerbaru && beritaTerbaru.length) { %>
+<section class="py-20 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-wrap items-end justify-between mb-12 gap-4">
+      <div>
+        <div class="text-xs font-bold tracking-widest uppercase text-desa-secondary mb-2">Informasi Terkini</div>
+        <h2 class="font-serif text-4xl font-black text-desa-dark">Berita & Kegiatan</h2>
+      </div>
+      <a href="/berita" class="text-desa-primary font-bold hover:underline">Semua Berita <i class="fas fa-arrow-right ml-1"></i></a>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6">
+      <% beritaTerbaru.forEach(b => { %>
+        <a href="/berita/<%= b.slug %>" class="group" data-testid="berita-card">
+          <div class="aspect-[16/10] rounded-2xl overflow-hidden bg-slate-100 mb-4 relative">
+            <% if (b.gambar) { %>
+              <img src="<%= b.gambar %>" alt="<%= b.judul %>" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+            <% } else { %>
+              <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-desa-primary/20 to-desa-secondary/20 text-desa-primary">
+                <i class="fas fa-newspaper text-5xl"></i>
+              </div>
+            <% } %>
+            <div class="absolute top-3 left-3 bg-desa-accent text-desa-dark text-xs font-bold px-3 py-1 rounded-full"><%= b.kategori %></div>
+          </div>
+          <div class="text-xs text-slate-500 mb-2"><i class="fas fa-calendar mr-1"></i> <%= new Date(b.createdAt).toLocaleDateString('id-ID', { day:'numeric', month:'long', year:'numeric' }) %></div>
+          <h3 class="font-serif font-bold text-lg text-desa-dark mb-2 group-hover:text-desa-primary transition line-clamp-2"><%= b.judul %></h3>
+          <p class="text-sm text-slate-600 line-clamp-2"><%= b.ringkasan %></p>
+        </a>
+      <% }) %>
+    </div>
+  </div>
+</section>
+<% } %>
+
+<!-- Galeri Preview -->
+<% if (galeri && galeri.length) { %>
+<section class="py-20 bg-desa-cream">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-wrap items-end justify-between mb-12 gap-4">
+      <div>
+        <div class="text-xs font-bold tracking-widest uppercase text-desa-secondary mb-2">Momen Berharga</div>
+        <h2 class="font-serif text-4xl font-black text-desa-dark">Galeri Foto Desa</h2>
+      </div>
+      <a href="/galeri" class="text-desa-primary font-bold hover:underline">Galeri Lengkap <i class="fas fa-arrow-right ml-1"></i></a>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <% galeri.slice(0,8).forEach((g, i) => { %>
+        <div class="aspect-square rounded-2xl overflow-hidden group cursor-pointer relative <%= i === 0 ? 'md:row-span-2 md:col-span-2 md:aspect-auto' : '' %>" data-testid="galeri-thumb">
+          <img src="<%= g.gambar %>" alt="<%= g.judul %>" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition flex items-end p-4">
+            <div class="text-white">
+              <div class="font-bold text-sm"><%= g.judul %></div>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+<% } %>
+
+<!-- Video Profil -->
+<% if (video) { %>
+<section class="py-20 bg-gradient-to-br from-desa-primary to-desa-dark text-white">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <div class="text-xs font-bold tracking-widest uppercase text-desa-accent mb-2">Video Profil</div>
+    <h2 class="font-serif text-4xl font-black mb-8"><%= video.judul %></h2>
+    <div class="aspect-video rounded-3xl overflow-hidden shadow-2xl border-4 border-white/10">
+      <% if (video.tipe === 'youtube' && video.youtubeId) { %>
+        <iframe src="https://www.youtube.com/embed/<%= video.youtubeId %>" allowfullscreen class="w-full h-full" data-testid="hero-video-youtube"></iframe>
+      <% } else if (video.filePath) { %>
+        <video controls class="w-full h-full" data-testid="hero-video-local">
+          <source src="<%= video.filePath %>" type="video/mp4" />
+        </video>
+      <% } %>
+    </div>
+  </div>
+</section>
+<% } %>
+
+<!-- CTA Aspirasi -->
+<section class="py-20 bg-white">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="bg-gradient-to-br from-desa-primary to-desa-dark rounded-3xl p-10 lg:p-14 text-white text-center relative overflow-hidden">
+      <div class="absolute -top-20 -right-20 w-60 h-60 bg-desa-accent/20 rounded-full blur-3xl"></div>
+      <div class="relative">
+        <i class="fas fa-comments text-5xl text-desa-accent mb-4"></i>
+        <h2 class="font-serif text-3xl lg:text-4xl font-black mb-3">Suara Anda, Masa Depan Desa</h2>
+        <p class="text-white/80 mb-8 max-w-2xl mx-auto">Sampaikan aspirasi, saran, dan kritik Anda kepada Pemerintah Desa. Kami terbuka untuk kemajuan bersama.</p>
+        <a href="/kontak" class="inline-flex items-center gap-2 bg-desa-accent text-desa-dark px-8 py-4 rounded-full font-bold hover:bg-yellow-400 transition shadow-xl" data-testid="cta-aspirasi-btn">
+          <i class="fas fa-paper-plane"></i> Kirim Aspirasi
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

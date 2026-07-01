@@ -1,0 +1,58 @@
+<!-- POTENSI DESA -->
+<section class="bg-gradient-to-br from-desa-primary to-desa-dark text-white py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-xs font-bold tracking-widest uppercase text-desa-accent mb-2">Potensi</div>
+    <h1 class="font-serif text-5xl font-black" data-testid="page-title-potensi">Potensi Desa</h1>
+    <p class="text-white/70 mt-2">Wisata, UMKM, dan produk unggulan yang kami banggakan</p>
+  </div>
+</section>
+
+<section class="py-12 bg-desa-cream">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Filter Kategori -->
+    <div class="flex flex-wrap gap-2 mb-10">
+      <% const kategoriList = ['Semua', 'Wisata', 'UMKM', 'Produk Unggulan', 'Pertanian', 'Lainnya']; %>
+      <% kategoriList.forEach(k => { 
+           const isActive = (k === 'Semua' && !kategoriAktif) || k === kategoriAktif;
+           const href = k === 'Semua' ? '/potensi' : '/potensi?kategori=' + encodeURIComponent(k);
+      %>
+        <a href="<%= href %>" data-testid="potensi-filter-<%= k.toLowerCase().replace(/\s+/g,'-') %>" class="px-5 py-2.5 rounded-full text-sm font-bold transition <%= isActive ? 'bg-desa-primary text-white shadow-md' : 'bg-white text-desa-dark border border-slate-200 hover:bg-desa-primary/10' %>">
+          <%= k %>
+        </a>
+      <% }) %>
+    </div>
+
+    <% if (potensi.length === 0) { %>
+      <div class="text-center py-16 text-slate-500">
+        <i class="fas fa-folder-open text-5xl mb-4"></i>
+        <p>Belum ada potensi pada kategori ini.</p>
+      </div>
+    <% } else { %>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <% potensi.forEach(p => { %>
+          <a href="/potensi/<%= p._id %>" class="group bg-white rounded-3xl overflow-hidden border border-slate-200 hover:shadow-2xl hover:-translate-y-1 transition" data-testid="potensi-item">
+            <div class="aspect-[4/3] bg-slate-100 overflow-hidden relative">
+              <% if (p.gambar) { %>
+                <img src="<%= p.gambar %>" alt="<%= p.nama %>" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
+              <% } else { %>
+                <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-desa-primary/20 to-desa-primary/20">
+                  <i class="fas fa-image text-slate-300 text-6xl"></i>
+                </div>
+              <% } %>
+              <div class="absolute top-3 left-3 bg-desa-primary text-white text-xs font-bold px-3 py-1 rounded-full"><%= p.kategori %></div>
+              <% if (p.featured) { %>
+                <div class="absolute top-3 right-3 bg-desa-primary text-white text-xs font-bold px-3 py-1 rounded-full"><i class="fas fa-star mr-1"></i>Unggulan</div>
+              <% } %>
+            </div>
+            <div class="p-6">
+              <h3 class="font-serif font-bold text-xl text-desa-dark mb-2 group-hover:text-desa-primary transition"><%= p.nama %></h3>
+              <p class="text-sm text-slate-600 line-clamp-3 mb-3"><%= p.deskripsi %></p>
+              <% if (p.lokasi) { %><div class="text-xs text-slate-500 flex items-center gap-1"><i class="fas fa-location-dot"></i><%= p.lokasi %></div><% } %>
+              <% if (p.harga) { %><div class="text-sm font-bold text-desa-primary mt-2"><%= p.harga %></div><% } %>
+            </div>
+          </a>
+        <% }) %>
+      </div>
+    <% } %>
+  </div>
+</section>

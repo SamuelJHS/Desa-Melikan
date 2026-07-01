@@ -1,0 +1,57 @@
+<!-- LOGIN ADMIN -->
+<div class="w-full max-w-md">
+  <div class="text-center mb-6">
+    <a href="/" class="inline-flex items-center gap-3">
+      <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-desa-accent to-desa-secondary flex items-center justify-center text-white shadow-2xl">
+        <i class="fas fa-mountain-sun text-2xl"></i>
+      </div>
+    </a>
+    <h1 class="font-serif text-3xl font-black text-white mt-4">Admin Panel</h1>
+    <p class="text-white/70 text-sm mt-1">Desa Melikan</p>
+  </div>
+
+  <div class="bg-white rounded-3xl p-8 shadow-2xl">
+    <h2 class="font-serif text-2xl font-black text-desa-dark mb-1">Selamat Datang</h2>
+    <p class="text-sm text-slate-600 mb-6">Masuk untuk mengelola website desa</p>
+
+    <% if (error_msg && error_msg.length) { %>
+      <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm mb-4" data-testid="login-error">
+        <i class="fas fa-exclamation-circle mr-2"></i><%= error_msg %>
+      </div>
+    <% } %>
+    <% if (success_msg && success_msg.length) { %>
+      <div class="bg-blue-50 border border-blue-200 text-blue-700 px-4 py-3 rounded-lg text-sm mb-4">
+        <i class="fas fa-check-circle mr-2"></i><%= success_msg %>
+      </div>
+    <% } %>
+
+    <form action="/auth/login" method="POST" class="space-y-4" data-testid="login-form">
+      <div>
+        <label class="block text-sm font-bold text-desa-dark mb-1.5">Email</label>
+        <div class="relative">
+          <i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+          <input type="email" name="email" required placeholder="admin@desa.id" autofocus class="w-full pl-12 pr-4 py-3 rounded-xl border border-slate-300 focus:border-desa-primary focus:ring-4 focus:ring-desa-primary/20 outline-none" data-testid="login-input-email" />
+        </div>
+      </div>
+      <div>
+        <label class="block text-sm font-bold text-desa-dark mb-1.5">Password</label>
+        <div class="relative">
+          <i class="fas fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+          <input type="password" name="password" required placeholder="••••••••" class="w-full pl-12 pr-4 py-3 rounded-xl border border-slate-300 focus:border-desa-primary focus:ring-4 focus:ring-desa-primary/20 outline-none" data-testid="login-input-password" />
+        </div>
+      </div>
+      <button type="submit" class="w-full bg-desa-primary text-white px-6 py-3.5 rounded-xl font-bold hover:bg-desa-dark transition shadow-lg" data-testid="login-submit-btn">
+        <i class="fas fa-right-to-bracket mr-2"></i>Masuk
+      </button>
+    </form>
+
+    <div class="mt-6 text-center">
+      <a href="/" class="text-sm text-slate-600 hover:text-desa-primary">
+        <i class="fas fa-arrow-left mr-1"></i>Kembali ke Website
+      </a>
+    </div>
+  </div>
+
+
+  </div>
+</div>

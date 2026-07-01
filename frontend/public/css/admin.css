@@ -1,0 +1,10 @@
+/* Admin custom styles */
+.line-clamp-1, .line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+.line-clamp-1 { -webkit-line-clamp: 1; }
+.line-clamp-2 { -webkit-line-clamp: 2; }
+
+table th { font-weight: 700; }

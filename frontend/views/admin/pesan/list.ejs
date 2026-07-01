@@ -1,0 +1,33 @@
+<!-- PESAN MASYARAKAT - LIST -->
+<div class="bg-white rounded-2xl p-6 border border-slate-200">
+  <div class="flex items-center justify-between mb-6">
+    <h2 class="font-bold text-lg text-slate-800">Pesan Masuk (<%= pesan.length %>)</h2>
+  </div>
+
+  <% if (pesan.length === 0) { %>
+    <div class="text-center py-12 text-slate-500"><i class="fas fa-inbox text-5xl mb-4"></i><p>Belum ada pesan masuk.</p></div>
+  <% } else { %>
+    <div class="space-y-3">
+      <% pesan.forEach(p => { %>
+        <div class="border <%= p.sudahDibaca ? 'border-slate-200 bg-white' : 'border-desa-accent bg-yellow-50' %> rounded-xl p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3 hover:shadow-md transition" data-testid="pesan-row">
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2 flex-wrap mb-1">
+              <% if (!p.sudahDibaca) { %><span class="bg-desa-accent text-desa-dark text-[10px] font-bold uppercase px-2 py-0.5 rounded-full">Baru</span><% } %>
+              <span class="font-bold text-slate-800"><%= p.nama %></span>
+              <span class="text-xs text-slate-500">&lt;<%= p.email %>&gt;</span>
+            </div>
+            <div class="text-sm text-slate-700 font-semibold"><%= p.subjek %></div>
+            <p class="text-sm text-slate-600 line-clamp-1 mt-1"><%= p.pesan %></p>
+            <div class="text-xs text-slate-400 mt-1"><i class="fas fa-clock mr-1"></i><%= new Date(p.createdAt).toLocaleString('id-ID') %></div>
+          </div>
+          <div class="flex gap-2 flex-shrink-0">
+            <a href="/admin/pesan/<%= p._id %>" class="px-4 py-2 rounded-lg bg-desa-primary text-white text-xs font-bold hover:bg-desa-dark" data-testid="btn-baca-pesan">Baca</a>
+            <form action="/admin/pesan/hapus/<%= p._id %>" method="POST" onsubmit="return confirm('Yakin hapus pesan?')">
+              <button type="submit" class="px-4 py-2 rounded-lg bg-red-100 text-red-600 text-xs font-bold hover:bg-red-200">Hapus</button>
+            </form>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  <% } %>
+</div>

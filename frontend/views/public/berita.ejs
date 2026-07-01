@@ -1,0 +1,69 @@
+<!-- BERITA LIST -->
+<section class="bg-gradient-to-br from-desa-primary to-desa-dark text-white py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-xs font-bold tracking-widest uppercase text-desa-accent mb-2">Informasi</div>
+    <h1 class="font-serif text-5xl font-black" data-testid="page-title-berita">Berita & Kegiatan</h1>
+    <p class="text-white/70 mt-2">Kabar terbaru dari Desa Melikan</p>
+
+    <!-- Search Form -->
+    <form action="/berita" method="GET" class="mt-8 max-w-2xl">
+      <div class="flex gap-2">
+        <div class="flex-1 relative">
+          <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+          <input type="search" name="q" value="<%= q %>" placeholder="Cari berita..." class="w-full pl-12 pr-4 py-3.5 rounded-full bg-white text-desa-dark placeholder-slate-400 focus:outline-none focus:ring-4 focus:ring-desa-accent/30" data-testid="berita-search-input" />
+        </div>
+        <button type="submit" class="px-6 py-3.5 bg-desa-accent text-desa-dark rounded-full font-bold hover:bg-yellow-400 transition" data-testid="berita-search-btn">Cari</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<section class="py-12 bg-desa-cream">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <% if (q) { %>
+      <p class="text-slate-600 mb-6">Hasil pencarian untuk: <span class="font-bold text-desa-dark">"<%= q %>"</span> — <%= berita.length %> berita ditemukan</p>
+    <% } %>
+
+    <% if (berita.length === 0) { %>
+      <div class="text-center py-16 text-slate-500">
+        <i class="fas fa-newspaper text-5xl mb-4"></i>
+        <p>Belum ada berita yang dipublikasikan.</p>
+      </div>
+    <% } else { %>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <% berita.forEach(b => { %>
+          <a href="/berita/<%= b.slug %>" class="group bg-white rounded-2xl overflow-hidden border border-slate-200 hover:shadow-2xl hover:-translate-y-1 transition" data-testid="berita-item">
+            <div class="aspect-[16/10] bg-slate-100 overflow-hidden relative">
+              <% if (b.gambar) { %>
+                <img src="<%= b.gambar %>" alt="<%= b.judul %>" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+              <% } else { %>
+                <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-desa-primary/20 to-desa-secondary/20 text-desa-primary">
+                  <i class="fas fa-newspaper text-5xl"></i>
+                </div>
+              <% } %>
+              <div class="absolute top-3 left-3 bg-desa-accent text-desa-dark text-xs font-bold px-3 py-1 rounded-full"><%= b.kategori %></div>
+            </div>
+            <div class="p-5">
+              <div class="text-xs text-slate-500 mb-2"><i class="fas fa-calendar mr-1"></i> <%= new Date(b.createdAt).toLocaleDateString('id-ID', { day:'numeric', month:'long', year:'numeric' }) %></div>
+              <h3 class="font-serif font-bold text-lg text-desa-dark mb-2 group-hover:text-desa-primary transition line-clamp-2"><%= b.judul %></h3>
+              <p class="text-sm text-slate-600 line-clamp-3"><%= b.ringkasan %></p>
+              <div class="mt-4 text-xs text-slate-500 flex items-center justify-between border-t border-slate-100 pt-3">
+                <span><i class="fas fa-user mr-1"></i><%= b.penulis %></span>
+                <span><i class="fas fa-eye mr-1"></i><%= b.views %></span>
+              </div>
+            </div>
+          </a>
+        <% }) %>
+      </div>
+
+      <!-- Pagination -->
+      <% if (totalPages > 1) { %>
+        <div class="flex justify-center gap-2 mt-10">
+          <% for (let i = 1; i <= totalPages; i++) { %>
+            <a href="?<%= q ? 'q=' + encodeURIComponent(q) + '&' : '' %>page=<%= i %>" class="w-10 h-10 rounded-full flex items-center justify-center font-bold transition <%= page === i ? 'bg-desa-primary text-white' : 'bg-white border border-slate-200 hover:bg-desa-primary/10' %>"><%= i %></a>
+          <% } %>
+        </div>
+      <% } %>
+    <% } %>
+  </div>
+</section>

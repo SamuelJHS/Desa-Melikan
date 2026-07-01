@@ -1,0 +1,45 @@
+<!-- POTENSI DETAIL -->
+<section class="bg-desa-cream py-12">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <a href="/potensi" class="inline-flex items-center text-desa-primary font-bold mb-6 hover:underline">
+      <i class="fas fa-arrow-left mr-2"></i>Kembali ke Potensi
+    </a>
+
+    <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-slate-200">
+      <% if (item.gambar) { %>
+        <div class="aspect-[16/9] bg-slate-100 overflow-hidden">
+          <img src="<%= item.gambar %>" alt="<%= item.nama %>" class="w-full h-full object-cover" />
+        </div>
+      <% } %>
+      <div class="p-8 lg:p-12">
+        <div class="flex flex-wrap items-center gap-2 mb-4">
+          <span class="bg-desa-primary text-white text-xs font-bold px-3 py-1 rounded-full"><%= item.kategori %></span>
+          <% if (item.featured) { %><span class="bg-desa-accent text-desa-dark text-xs font-bold px-3 py-1 rounded-full"><i class="fas fa-star mr-1"></i>Unggulan</span><% } %>
+        </div>
+        <h1 class="font-serif text-3xl lg:text-4xl font-black text-desa-dark mb-4" data-testid="potensi-detail-title"><%= item.nama %></h1>
+        <div class="prose max-w-none text-slate-700 leading-relaxed whitespace-pre-line"><%= item.deskripsi %></div>
+
+        <div class="grid sm:grid-cols-2 gap-4 mt-8 pt-8 border-t border-slate-200">
+          <% if (item.lokasi) { %>
+          <div>
+            <div class="text-xs font-bold uppercase tracking-wider text-desa-secondary mb-1">Lokasi</div>
+            <div class="text-slate-700"><i class="fas fa-location-dot text-desa-primary mr-2"></i><%= item.lokasi %></div>
+          </div>
+          <% } %>
+          <% if (item.kontak) { %>
+          <div>
+            <div class="text-xs font-bold uppercase tracking-wider text-desa-secondary mb-1">Kontak</div>
+            <div class="text-slate-700"><i class="fas fa-phone text-desa-primary mr-2"></i><%= item.kontak %></div>
+          </div>
+          <% } %>
+          <% if (item.harga) { %>
+          <div>
+            <div class="text-xs font-bold uppercase tracking-wider text-desa-secondary mb-1">Harga</div>
+            <div class="text-desa-secondary font-bold text-lg"><%= item.harga %></div>
+          </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

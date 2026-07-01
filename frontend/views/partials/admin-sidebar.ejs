@@ -1,0 +1,42 @@
+<!-- Sidebar Admin -->
+<aside id="adminSidebar" class="fixed inset-y-0 left-0 w-64 bg-white text-desa-dark z-40 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 overflow-y-auto shadow-2xl">
+  <div class="p-6 border-b border-slate-200">
+    <div class="flex items-center gap-3">
+      <img src="/static/images/LOGO PADUKUHAN MELIKAN FIX.png" alt="Desa Melikan logo" class="w-10 h-10 rounded-xl object-cover shadow-md" />
+      <div>
+        <div class="font-bold text-sm">Admin Panel</div>
+        <div class="text-[10px] text-desa-dark/70 uppercase tracking-wider">Desa Melikan</div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="p-4 space-y-1">
+    <% const menu = [
+      { href: '/admin/dashboard', icon: 'gauge-high', label: 'Dashboard' },
+      { href: '/admin/berita', icon: 'newspaper', label: 'Berita' },
+      { href: '/admin/potensi', icon: 'seedling', label: 'Potensi Desa' },
+      { href: '/admin/galeri', icon: 'images', label: 'Galeri' },
+      { href: '/admin/video', icon: 'video', label: 'Video Profil' },
+      { href: '/admin/profil', icon: 'building-columns', label: 'Profil Desa' },
+      { href: '/admin/kontak', icon: 'address-card', label: 'Kontak Desa' },
+      { href: '/admin/pesan', icon: 'envelope-open-text', label: 'Pesan Masyarakat' },
+    ]; %>
+    <% menu.forEach(m => { 
+         const active = currentPath.startsWith(m.href);
+    %>
+        <a href="<%= m.href %>" data-testid="admin-nav-<%= m.label.toLowerCase().replace(/\s+/g, '-') %>" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors <%= active ? 'bg-desa-primary text-white shadow-lg' : 'text-desa-dark hover:bg-desa-primary/10 hover:text-desa-primary' %>">
+        <i class="fas fa-<%= m.icon %> w-5"></i>
+        <span><%= m.label %></span>
+      </a>
+    <% }) %>
+  </nav>
+
+  <div class="p-4 mt-auto border-t border-white/10">
+    <form action="/auth/logout" method="POST">
+      <button type="submit" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-red-300 hover:bg-red-500/20 transition" data-testid="admin-logout-btn">
+        <i class="fas fa-right-from-bracket w-5"></i>
+        <span>Logout</span>
+      </button>
+    </form>
+  </div>
+</aside>
